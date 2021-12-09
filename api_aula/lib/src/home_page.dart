@@ -1,4 +1,7 @@
+import 'dart:html';
+
 import 'package:api_aula/src/controller/home_controller.dart';
+import 'package:api_aula/src/repositories/to_repository.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -10,31 +13,37 @@ class _HomePageState extends State<HomePage> {
   final controller = HomeController();
 
   //>>controllerscroll<<
-  late Future<List<String>> _future;
-  List<String> _data = [];
-  int _carregaPag = 0, _limit = 5;
-  ScrollController _controller =
-      ScrollController(initialScrollOffset: 0.0, keepScrollOffset: true);
-  //>>Construtor para o scroll<<
-  _HomePageState() {
-    _controller.addListener(() {
-      var End = _controller.offset == _controller.position.maxScrollExtent;
-      if (End) {
-        setState(() {
-          _future = loadData();
-        });
-      }
-    });
-    _future = loadData();
-  }
+  // late Future<List<String>> toDo;
+  // List<String> _data = [];
+  // int _carregaPag = 0, _limit = 5;
+  // ScrollController _controller =
+  //     ScrollController(initialScrollOffset: 0.0, keepScrollOffset: true);
 
-  Future<List<String>> loadData() async {
-    for (var i = _carregaPag; i < _carregaPag + _limit; i++) {
-      _data.add('data todos = $i');
-    }
-    _carregaPag += _limit;
-    return _data;
-  }
+  final ScrollController _controller = ScrollController();
+  
+  //>>Construtor para o scroll<<
+  //_HomePageState() {
+    // _controller.addListener(() {
+    //   var End = _controller.offset == _controller.position.maxScrollExtent;
+
+    //   if (End) {
+        
+    //     // setState(() {
+    //     //   _future = loadData();
+    //     // });
+    //   }
+    //   // page++;
+    // });
+    // _future = loadData();
+  //}
+
+  // Future<List<String>> loadData() async {
+  //   for (var i = _carregaPag; i < _carregaPag + _limit; i++) {
+  //     _data.add('data todos = $i');
+  //   }
+  //   _carregaPag += _limit;
+  //   return _data;
+  // }
 
 //espaço para codigo
 
@@ -72,6 +81,16 @@ class _HomePageState extends State<HomePage> {
   }
 
   _start() {
+    _controller.addListener(() {
+      var End = _controller.offset == _controller.position.maxScrollExtent;
+
+      if (End) {
+        
+        // setState(() { });
+      }
+      // page++;
+    });
+
     return Container();
   }
 

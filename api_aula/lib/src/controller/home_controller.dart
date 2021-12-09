@@ -10,12 +10,19 @@ class HomeController {
   final state = ValueNotifier<HomeSate>(HomeSate.start);
   //HomeSate state = HomeSate.start;
 
+  //infinitescroll
+  int page = 1;
+  int limit = 5;
+
   HomeController([ToRepository? repository])
       : repository = repository ?? ToRepository(Dio());
 
   // final repository = ToRepository(Dio()); // duvida
 
   Future start() async {
+    //infinite scroll
+    var toDo = repository.fetchTodos(page: page, limit: limit);
+
     state.value = HomeSate.loading;
     try {
       todos = await repository.fetchTodos();
@@ -23,6 +30,12 @@ class HomeController {
     } catch (e) {
       state.value = HomeSate.error;
     }
+    //scroll
+    page++;
+  }
+
+  controllerScroll(){
+    
   }
 
   void addListener(Null Function() param0) {}

@@ -20,8 +20,6 @@ class HomeController {
   // final repository = ToRepository(Dio()); // duvida
 
   Future start() async {
-    //infinite scroll
-    //var todo = repository.fetchTodos(page: page, limit: limit);
 
     state.value = HomeSate.loading;
     try {
@@ -33,7 +31,7 @@ class HomeController {
     //scroll
   }
 
-  Future<List<ToModel>> fetchTodos() async {
+  Future<List<ToModel>> fetchTodos() async { //infinite scroll
     var result = await repository.fetchTodos(page: page, limit: limit);
     page++;
     return result;

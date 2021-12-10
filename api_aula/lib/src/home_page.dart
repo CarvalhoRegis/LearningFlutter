@@ -13,29 +13,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final controller = HomeController();
 
-  //>>controllerscroll<<
-  // late Future<List<String>> toDo;
-  // List<String> _data = [];
-  // int _carregaPag = 0, _limit = 5;
-  // ScrollController _controller =
-  //     ScrollController(initialScrollOffset: 0.0, keepScrollOffset: true);
-
   final ScrollController _controller = ScrollController();
-
-  //>>Construtor para o scroll<<
-  // void addListener () {
-  //   _controller.addListener(() {
-  //     var End = _controller.offset == _controller.position.maxScrollExtent;
-  //     if (End) {
-  //       setState(() {
-  //         // controller.repository.fetchTodos(page: page, limit: limit);
-  //         todos.addAll(
-  //             controller.repository.fetchTodos(page: page, limit: limit));
-  //       });
-  //       page++;
-  //     }
-  //   });
-  // }
 
   _sucess() {
     return ListView.builder(
@@ -135,17 +113,3 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-//duas paginas 10 em 10
-//fetch todos
-//listner mais um fetch pagina 2 do que tem a te adcionar eles 
-/*carregamento infinito - facebook
-
-tempo de loading para carregar mais conteudo 
-
-infinitescroll -
-
-add
-commit
-pull
-
-push */

@@ -1,7 +1,8 @@
-import 'dart:html';
+// import 'dart:html';
 
 import 'package:api_aula/src/controller/home_controller.dart';
 import 'package:api_aula/src/repositories/to_repository.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -20,35 +21,25 @@ class _HomePageState extends State<HomePage> {
   //     ScrollController(initialScrollOffset: 0.0, keepScrollOffset: true);
 
   final ScrollController _controller = ScrollController();
-  
+
   //>>Construtor para o scroll<<
-  //_HomePageState() {
-    // _controller.addListener(() {
-    //   var End = _controller.offset == _controller.position.maxScrollExtent;
-
-    //   if (End) {
-        
-    //     // setState(() {
-    //     //   _future = loadData();
-    //     // });
-    //   }
-    //   // page++;
-    // });
-    // _future = loadData();
-  //}
-
-  // Future<List<String>> loadData() async {
-  //   for (var i = _carregaPag; i < _carregaPag + _limit; i++) {
-  //     _data.add('data todos = $i');
-  //   }
-  //   _carregaPag += _limit;
-  //   return _data;
+  // void addListener () {
+  //   _controller.addListener(() {
+  //     var End = _controller.offset == _controller.position.maxScrollExtent;
+  //     if (End) {
+  //       setState(() {
+  //         // controller.repository.fetchTodos(page: page, limit: limit);
+  //         todos.addAll(
+  //             controller.repository.fetchTodos(page: page, limit: limit));
+  //       });
+  //       page++;
+  //     }
+  //   });
   // }
-
-//espaço para codigo
 
   _sucess() {
     return ListView.builder(
+      controller: _controller,
       itemCount: controller.todos.length, //tanto de itens que vai pegar list
       itemBuilder: (context, int index) {
         var todo = controller.todos[index];
@@ -81,16 +72,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   _start() {
-    _controller.addListener(() {
-      var End = _controller.offset == _controller.position.maxScrollExtent;
-
-      if (End) {
-        
-        // setState(() { });
-      }
-      // page++;
-    });
-
     return Container();
   }
 
@@ -109,9 +90,22 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  scrollControllerListener() {
+    _controller.addListener(() async {
+      var End = _controller.offset == _controller.position.maxScrollExtent;
+      if (End) {
+        var novosTodos = await controller.fetchTodos();
+        setState(() {
+          controller.todos.addAll(novosTodos);
+        });
+      }
+    });
+  }
+
   @override //pegar a api da internet
   void initState() {
     super.initState();
+    scrollControllerListener();
     controller.start();
   }
 
@@ -119,7 +113,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Lista API\'s'),
+        title: Text('Lista API\'s ${controller.todos.length}'),
         actions: [
           IconButton(
             icon: Icon(Icons.refresh_outlined),

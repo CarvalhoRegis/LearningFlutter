@@ -7,7 +7,7 @@ class ToRepository {
   //acesso externo
   //Dio ja converte para json
   Dio dio; //declarando o dio ja convertendo para json
-  final url = 'https://jsonplaceholder.typicode.com/photos?_start=0&_limit=5';
+  final url = 'https://jsonplaceholder.typicode.com/photos?_start=0&_limit=8';
 
   ToRepository(this.dio, [Dio? client]) {
     dio = client ?? Dio();
@@ -18,9 +18,10 @@ class ToRepository {
       this.dio = client;
     } */
   }
-  Future<List<ToModel>> fetchTodos({int page = 1, int limit = 5}) async {
+  Future<List<ToModel>> fetchTodos({int page = 1, int limit = 8}) async {
     int start = (page - 1) * limit;
-    var url = 'https://jsonplaceholder.typicode.com/photos?_start=$start&_limit=$limit';
+    var url =
+        'https://jsonplaceholder.typicode.com/photos?_start=$start&_limit=$limit';
     var result = dio.get(url);
     //loop para leitura da api
     final response = await dio.get(url);

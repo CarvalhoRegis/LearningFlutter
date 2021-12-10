@@ -12,7 +12,7 @@ class HomeController {
 
   //infinitescroll
   int page = 1;
-  int limit = 5;
+  int limit = 10;
 
   HomeController([ToRepository? repository])
       : repository = repository ?? ToRepository(Dio());
@@ -21,21 +21,22 @@ class HomeController {
 
   Future start() async {
     //infinite scroll
-    var toDo = repository.fetchTodos(page: page, limit: limit);
+    //var todo = repository.fetchTodos(page: page, limit: limit);
 
     state.value = HomeSate.loading;
     try {
-      todos = await repository.fetchTodos();
+      todos = await fetchTodos();
       state.value = HomeSate.sucess;
     } catch (e) {
       state.value = HomeSate.error;
     }
     //scroll
-    page++;
   }
 
-  controllerScroll(){
-    
+  Future<List<ToModel>> fetchTodos() async {
+    var result = await repository.fetchTodos(page: page, limit: limit);
+    page++;
+    return result;
   }
 
   void addListener(Null Function() param0) {}
